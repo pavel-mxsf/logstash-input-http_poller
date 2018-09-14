@@ -132,7 +132,7 @@ describe LogStash::Inputs::HTTP_Poller do
 
             it "should properly set the auth parameter" do
               expect(normalized[2][:auth]).to eq({
-                :user => auth["user"], 
+                :user => auth["user"],
                 :pass => auth["password"],
                 :eager => true
               })
@@ -143,14 +143,14 @@ describe LogStash::Inputs::HTTP_Poller do
         # Legacy way of doing things, kept for backwards compat.
         describe "auth with nested auth hash" do
           let(:url) { {"url" => "http://localhost", "method" => "get", "auth" => auth} }
-          
+
           include_examples("auth")
         end
 
         # The new 'right' way to do things
         describe "auth with direct auth options" do
           let(:url) { {"url" => "http://localhost", "method" => "get", "user" => auth["user"], "password" => auth["password"]} }
-          
+
           include_examples("auth")
         end
       end
@@ -365,7 +365,7 @@ describe LogStash::Inputs::HTTP_Poller do
     end
 
     describe "a valid request and decoded response" do
-      let(:payload) { {"a" => 2, "hello" => ["a", "b", "c"]} }
+      let(:payload) { {"a" => "2", "hello" => ["a", "b", "c"]} }
       let(:response_body) { LogStash::Json.dump(payload) }
       let(:opts) { default_opts }
       let(:instance) {
@@ -399,7 +399,7 @@ describe LogStash::Inputs::HTTP_Poller do
       end
 
       include_examples("matching metadata")
-      
+
       context "with an empty body" do
         let(:response_body) { "" }
         it "should return an empty event" do
